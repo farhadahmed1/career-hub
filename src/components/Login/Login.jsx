@@ -1,6 +1,8 @@
 import {
   GoogleAuthProvider,
+  createUserWithEmailAndPassword,
   getAuth,
+  signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
 } from "firebase/auth";
@@ -40,15 +42,34 @@ const Login = () => {
       });
   };
 
-  // Email Register Form
-  const handleRegister = (e) => {
-    e.preventDefault();
-    //console.log("from register");
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-    console.log(email, password);
+  // singIn user by email address
+
+  const LogInUserByEmail = (email, password) => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((result) => {
+        // Sign in success, update UI with the signed-in user's information
+        const loginUser = result.user;
+        console.log(loginUser);
+        setUser(loginUser);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
+  // sing Out user by email address
+  const handelSingOut = () => {
+    signOut(auth)
+      .then(() => {
+        setUser(null);
+
+        // Sign-out successful.
+      })
+      .catch((err) => {
+        console.log(err);
+        // An error happened.
+      });
+  };
   return (
     <div>
       <div className="hero min-h-screen bg-base-200">
@@ -62,7 +83,7 @@ const Login = () => {
             </p>
           </div>
           <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-            <form onSubmit={handleRegister} className="card-body">
+            <form className="card-body">
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Email</span>
@@ -92,8 +113,22 @@ const Login = () => {
                   </a>
                 </label>
               </div>
+
+              {/* login & logout use email and password */}
+
               <div className="form-control mt-6">
-                <button className="btn btn-primary">Login</button>
+                {user ? (
+                  <button onSubmit={handelSingOut} className="btn btn-primary">
+                    SignIn
+                  </button>
+                ) : (
+                  <button
+                    onSubmit={LogInUserByEmail}
+                    className="btn btn-primary"
+                  >
+                    SignOut
+                  </button>
+                )}
               </div>
               <div className="form-control mt-6">
                 {user ? (

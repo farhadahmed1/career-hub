@@ -10,6 +10,7 @@ import AppliedJobs from "./components/AppliedJobs/AppliedJobs.jsx";
 import Blogs from "./components/Blogs/Blogs.jsx";
 import ErrorPage from "./components/ErrorPage/ErrorPage.jsx";
 import Login from "./components/Login/Login.jsx";
+import UserRegister from "./components/UserRegister/UserRegister.jsx";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login></Login>,
+      },
+      {
+        path: "/register",
+        element: <UserRegister></UserRegister>,
       },
     ],
   },
