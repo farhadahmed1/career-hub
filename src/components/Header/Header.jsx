@@ -51,7 +51,7 @@ const Header = () => {
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{links}</ul>
-          ## profile section
+          {/* profile section */}
         </div>
         <div className=" navbar-end ">
           <div className="dropdown  dropdown-end">
@@ -72,16 +72,16 @@ const Header = () => {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <a className="justify-between">
+                <NavLink className="justify-between" to="/">
                   Profile
                   <span className="badge">New</span>
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a>Settings</a>
+                <NavLink to="/">Setting</NavLink>
               </li>
               <li>
-                <a>Logout</a>
+                <NavLink to="/login">Login</NavLink>
               </li>
             </ul>
           </div>
