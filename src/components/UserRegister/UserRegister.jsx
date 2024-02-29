@@ -3,6 +3,7 @@ import app from "../../firbase/firbase.init";
 import { useState } from "react";
 import { FaRegEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const UserRegister = () => {
   const auth = getAuth(app);
@@ -24,22 +25,24 @@ const UserRegister = () => {
     //console.log("from register");
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email, password);
+    const accepted = e.target.terms.checked;
+    console.log(email, password, accepted);
 
     // reset Error state
     setRegisterError("");
     setSuccess("");
 
+    // added validation
     if (password.length < 6) {
       setRegisterError("Password must be at least 6 characters");
       return;
-    } else if (/[A-Z]/.test.password) {
-      setRegisterError(
-        "length 6  two digits tow lowercase letters  one special case letter two uppercase letters"
-      );
+    } else if (!/[A-Z]/.test(password)) {
+      setRegisterError("Your password must be at least one uppercase ");
+      return;
+    } else if (!accepted) {
+      setRegisterError("Please accept our terms and conditions");
       return;
     }
-
     //create user and password
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -104,13 +107,26 @@ const UserRegister = () => {
                   </span>
                 </div>
               </div>
-
+              <div>
+                <input type="checkbox" name="terms" id="terms" />
+                <label className="ml-2" htmlFor="terms">
+                  {" "}
+                  Accept Our Condition
+                </label>
+              </div>
               <div className="form-control mt-6">
                 <button className="btn btn-primary">Register</button>
               </div>
             </form>
+            <p className="mb-6 text-center">
+              Already have an account ? Please
+              <Link to="/login" className="text-green-600 ml-1/2">
+                {" "}
+                Login
+              </Link>
+            </p>
             {registerError && (
-              <div className="alert alert-danger" role="alert">
+              <div className="alert alert-danger  bg-red-500/100" role="alert">
                 {registerError}
               </div>
             )}
